@@ -38,14 +38,19 @@ namespace API.Models.POCO
         public EnmRole R01F05 { get; set; }
 
         /// <summary>
+        /// BorrowLimit
+        /// </summary>
+        public int R01F06 { get; set;}
+
+        /// <summary>
         /// CreatedAt
         /// </summary>
         [IgnoreOnUpdate]
-        public DateTime R01F06 { get; set; } = DateTime.Now;
+        public DateTime R01F07 { get; set; } = DateTime.Now;
 
         /// <summary>
         /// UpdatedAt
         /// </summary>
-        public DateTime R01F07 { get; set; } = DateTime.Now;
+        public DateTime R01F08 { get; set; } = DateTime.Now;
     }
 }

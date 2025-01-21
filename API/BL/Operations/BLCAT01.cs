@@ -4,31 +4,29 @@ using API.Models.DTO;
 using API.Models.Enum;
 using API.Models.POCO;
 using ServiceStack.Data;
-using ServiceStack.OrmLite;
 using System;
-using System.Web;
 using System.Linq;
+using System.Web;
+using ServiceStack.OrmLite;
 using API.Extensions;
 
 namespace API.BL.Operations
 {
-    public class BLUSR01 : IDataHandler<DTOUSR01>
+    public class BLCAT01 : IDataHandler<DTOCAT01>
     {
-        private USR01 _objUSR01;
+        private CAT01 _objCAT01;
         private Response _objResponse;
         private readonly IDbConnectionFactory _dbFactory;
-
 
         public EnmType Type { get; set; }
         public int Id { get; set; }
 
-
-        public BLUSR01()
+        public BLCAT01()
         {
             _objResponse = new Response();
 
-            _dbFactory= HttpContext.Current.Application["DbFactory"] as IDbConnectionFactory;
-            
+            _dbFactory = HttpContext.Current.Application["DbFactory"] as IDbConnectionFactory;
+
             if (_dbFactory == null)
             {
                 throw new Exception("IDbConnectionFactory not found");
@@ -39,7 +37,7 @@ namespace API.BL.Operations
         {
             using (var db = _dbFactory.OpenDbConnection())
             {
-                return db.Exists<USR01>(u => u.R01F01 == id);
+                return db.Exists<CAT01>(c => c.T01F01 == id);
             }
         }
 
@@ -49,11 +47,11 @@ namespace API.BL.Operations
             {
                 using (var db = _dbFactory.OpenDbConnection())
                 {
-                    var result = db.Select<USR01>().ToList();
+                    var result = db.Select<CAT01>().ToList();
                     if (result.Count == 0)
                     {
                         _objResponse.IsError = true;
-                        _objResponse.Message = "Zero users available";
+                        _objResponse.Message = "Zero categories available";
                         _objResponse.Data = null;
 
                         return _objResponse;
@@ -62,7 +60,7 @@ namespace API.BL.Operations
                     _objResponse.Data = result;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _objResponse.IsError = true;
                 _objResponse.Message = ex.Message;
@@ -70,14 +68,22 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
-        public Response Add(USR01 objUSR01)
+        public Response GetById(int id)
         {
             try
             {
+                if (!IsExist(id))
+                {
+                    _objResponse.IsError = true;
+                    _objResponse.Message = "Category dose not Exist";
+                    _objResponse.Data = null;
+
+                    return _objResponse;
+                }
                 using (var db = _dbFactory.OpenDbConnection())
                 {
-                    db.Insert(objUSR01);
-                    _objResponse.Message = "User Added";
+                    _objResponse.Data = db.SingleById<CAT01>(id);
+                    return _objResponse;
                 }
             }
             catch (Exception ex)
@@ -88,14 +94,14 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
-        public Response Edit(USR01 objUSR01)
+        public Response Add(CAT01 objCAT01)
         {
             try
             {
                 using (var db = _dbFactory.OpenDbConnection())
                 {
-                    db.Update(objUSR01);
-                    _objResponse.Message = $"User with Id {Id} Edited";
+                    db.Insert(objCAT01);
+                    _objResponse.Message = "Category Added";
                 }
             }
             catch (Exception ex)
@@ -106,30 +112,47 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
-        public void PreSave(DTOUSR01 objDTO)
+        public Response Edit(CAT01 objCAT01)
         {
-            _objUSR01 = objDTO.Convert<USR01>();
-            _objUSR01.R01F04 = BLEncryption.Encrypt(_objUSR01.R01F04);
-
-            if(Type == EnmType.E)
+            try
             {
-                _objUSR01.R01F01 = Id;
+                using (var db = _dbFactory.OpenDbConnection())
+                {
+                    db.Update(objCAT01);
+                    _objResponse.Message = $"Category with Id {Id} Edited";
+                }
+            }
+            catch (Exception ex)
+            {
+                _objResponse.IsError = true;
+                _objResponse.Message = ex.Message;
+            }
+            return _objResponse;
+        }
+
+        public void PreSave(DTOCAT01 objDTO)
+        {
+            _objCAT01 = objDTO.Convert<CAT01>();
+
+            if (Type == EnmType.E)
+            {
+                _objCAT01.T01F01 = Id;
             }
         }
 
         public Response Validation()
         {
-            if(Type == EnmType.E || Type == EnmType.D)
+            if (Type == EnmType.E || Type == EnmType.D)
             {
                 if (Id <= 0)
                 {
                     _objResponse.IsError = true;
-                    _objResponse.Message = "Invalid UserId";
+                    _objResponse.Message = "Invalid CategoryId";
                 }
                 else if (!IsExist(Id))
                 {
                     _objResponse.IsError = true;
-                    _objResponse.Message = "User not found";
+                    _objResponse.Message = "Category not found";
                 }
             }
 
@@ -139,13 +162,13 @@ namespace API.BL.Operations
         public Response Save()
         {
 
-            if(Type == EnmType.A)
+            if (Type == EnmType.A)
             {
-                return Add(_objUSR01);
+                return Add(_objCAT01);
             }
-            else if(Type == EnmType.E)
+            else if (Type == EnmType.E)
             {
-                return Edit(_objUSR01);
+                return Edit(_objCAT01);
             }
 
             return _objResponse;
@@ -159,8 +182,8 @@ namespace API.BL.Operations
                 {
                     if (Type == EnmType.D)
                     {
-                        db.DeleteById<USR01>(Id);
-                        _objResponse.Message = $"User with Id {Id} Deleted";
+                        db.DeleteById<CAT01>(Id);
+                        _objResponse.Message = $"Category with Id {Id} Deleted";
                     }
                 }
             }
@@ -171,17 +194,5 @@ namespace API.BL.Operations
             }
             return _objResponse;
         }
-
-        public USR01 GetUser(DTOUSR01Auth objAuth)
-        {
-            string encryptedR01F04 = BLEncryption.Encrypt(objAuth.R01F04);
-            using (var db = _dbFactory.OpenDbConnection())
-            {
-                return db.Single<USR01>(
-                    u => u.R01F02 == objAuth.R01F02 
-                    && u.R01F04 == encryptedR01F04);
-            }
-        }
-
     }
 }

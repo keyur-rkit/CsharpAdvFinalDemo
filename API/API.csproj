@@ -209,8 +209,17 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BL\Interface\IDataHandler.cs" />
+    <Compile Include="BL\Operations\BLAUH01.cs" />
+    <Compile Include="BL\Operations\BLBKS01.cs" />
+    <Compile Include="BL\Operations\BLBRW01.cs" />
+    <Compile Include="BL\Operations\BLCAT01.cs" />
     <Compile Include="BL\Operations\BLEncryption.cs" />
     <Compile Include="BL\Operations\BLUSR01.cs" />
+    <Compile Include="Controllers\CLAUH01Controller.cs" />
+    <Compile Include="Controllers\CLBKS01Controller.cs" />
+    <Compile Include="Controllers\CLBRW01Controller.cs" />
+    <Compile Include="Controllers\CLCAT01Controller.cs" />
+    <Compile Include="Controllers\CLUSR01AuthController.cs" />
     <Compile Include="Controllers\CLUSR01Controller.cs" />
     <Compile Include="Extensions\DTOToPOCO.cs" />
     <Compile Include="Filters\JWTAuthorizationFilter.cs" />
@@ -223,6 +232,7 @@
     <Compile Include="Models\DTO\DTOBRW01.cs" />
     <Compile Include="Models\DTO\DTOCAT01.cs" />
     <Compile Include="Models\DTO\DTOUSR01.cs" />
+    <Compile Include="Models\DTO\DTOUSR01Auth.cs" />
     <Compile Include="Models\Enum\EnmRole.cs" />
     <Compile Include="Models\Enum\EnmType.cs" />
     <Compile Include="Models\POCO\AUH01.cs" />

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
+
 
 namespace API.Models.DTO
 {
@@ -10,7 +8,8 @@ namespace API.Models.DTO
         /// <summary>
         /// Name
         /// </summary>
-        
+        [Required(ErrorMessage = "Name is required.")]
+        [StringLength(50, ErrorMessage = "Name cannot exceed 50 characters.")]
         public string T01F02 { get; set; }
 
         /// <summary>

@@ -1,9 +1,6 @@
 ﻿using API.Models.Enum;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+
 
 namespace API.Models.DTO
 {
@@ -37,5 +34,12 @@ namespace API.Models.DTO
         [Required(ErrorMessage = "Role is required.")]
         [EnumDataType(typeof(EnmRole), ErrorMessage = "Invalid role.")]
         public EnmRole R01F05 { get; set; }
+
+        /// <summary>
+        /// BorrowLimit
+        /// </summary>
+        [Required(ErrorMessage = "BorrowLimit is required.")]
+        [Range(0,20, ErrorMessage = "Borrow Limit must be in 0 to 20")]
+        public int R01F06 { get; set; }
     }
 }

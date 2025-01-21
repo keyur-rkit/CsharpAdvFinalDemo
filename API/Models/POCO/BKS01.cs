@@ -41,13 +41,18 @@ namespace API.Models.POCO
         public int S01F06 { get; set; }
 
         /// <summary>
+        /// Rating
+        /// </summary>
+        public decimal S01F07 { get; set; }
+
+        /// <summary>
         /// CreatedAt
         /// </summary>
-        public DateTime S01F07 { get; set; } = DateTime.Now;
+        public DateTime S01F08 { get; set; } = DateTime.Now;
 
         /// <summary>
         /// UpdatedAt
         /// </summary>
-        public DateTime S01F08 { get; set; } = DateTime.Now;
+        public DateTime S01F09 { get; set; } = DateTime.Now;
     }
 }
