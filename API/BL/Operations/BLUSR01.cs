@@ -77,15 +77,7 @@ namespace API.BL.Operations
             {
                 using (var db = _dbFactory.OpenDbConnection())
                 {
-                    var result = db.Select<USR01>(u => u.R01F01 == userId).ToList();
-                    if (result.Count == 0)
-                    {
-                        _objResponse.IsError = true;
-                        _objResponse.Message = "User not available";
-                        _objResponse.Data = null;
-
-                        return _objResponse;
-                    }
+                    var result = db.Select<USR01>(u => u.R01F01 == userId).ToList(); 
                     _objResponse.IsError = false;
                     _objResponse.Data = result;
                     _objResponse.Message = "User get successfully";
@@ -188,6 +180,16 @@ namespace API.BL.Operations
                 {
                     if (Type == EnmType.D)
                     {
+                        int adminCount = (int)db.Count<USR01>(u => u.R01F05 == EnmRole.Admin);
+                        _objUSR01.R01F05 = db.Single<USR01>(u=> u.R01F01 == Id).R01F05;
+
+                        if (adminCount <= 1 &&  _objUSR01.R01F05 == EnmRole.Admin) 
+                        {
+                            _objResponse.IsError = true;
+                            _objResponse.Message = "Minimum one admin needed";
+                            return _objResponse;
+                        }
+
                         db.DeleteById<USR01>(Id);
                         _objResponse.Message = $"User with Id {Id} Deleted";
                     }

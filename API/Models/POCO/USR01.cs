@@ -35,6 +35,7 @@ namespace API.Models.POCO
         /// <summary>
         /// Role
         /// </summary>
+        [IgnoreOnUpdate]
         public EnmRole R01F05 { get; set; }
 
         /// <summary>

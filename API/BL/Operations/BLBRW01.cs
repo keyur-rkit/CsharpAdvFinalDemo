@@ -184,6 +184,14 @@ namespace API.BL.Operations
                         _objResponse.Message = "Book returned already";
                         return _objResponse;
                     }
+
+                    if(returnDate < _objBRW01.W01F04)
+                    {
+                        _objResponse.IsError = true;
+                        _objResponse.Message = "ReturnDate must be after BorrowDate";
+                        return _objResponse;
+                    }
+
                     _objBRW01.W01F05 = returnDate;
                     db.Update(_objBRW01);
                     _objBLBKS01.IncreaseOne(_objBRW01.W01F03);
