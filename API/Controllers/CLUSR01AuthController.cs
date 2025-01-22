@@ -35,8 +35,8 @@ namespace API.Controllers
             if(_objUSR01 != null)
             {
                 _objResponse.Data = JWTHelper.GenerateJwtToken(
-                    _objUSR01.R01F02,_objUSR01.R01F05.ToString());
-                _objResponse.Message = "Authentication Sucessfull";
+                    _objUSR01.R01F02,_objUSR01.R01F01,_objUSR01.R01F05.ToString());
+                _objResponse.Message = "Authentication Successfull";
             }
             else
             {

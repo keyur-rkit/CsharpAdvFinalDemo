@@ -58,6 +58,7 @@ namespace API.BL.Operations
                     }
                     _objResponse.IsError = false;
                     _objResponse.Data = result;
+                    _objResponse.Message = "Authors get successfully";
                 }
             }
             catch (Exception ex)
@@ -83,6 +84,7 @@ namespace API.BL.Operations
                 using (var db = _dbFactory.OpenDbConnection())
                 {
                     _objResponse.Data = db.SingleById<AUH01>(id);
+                    _objResponse.Message = "Author get successfully";
                     return _objResponse;
                 }
             }

@@ -1,8 +1,10 @@
 ﻿using API.BL.Operations;
 using API.Filters;
+using API.Helpers;
 using API.Models;
 using API.Models.DTO;
 using API.Models.Enum;
+using System;
 using System.Net.Http;
 using System.Web.Http;
 
@@ -14,6 +16,8 @@ namespace API.Controllers
         private Response _objResponse;
         private BLBKS01 _objBLBKS01;
 
+        public string cacheKey = "GetAllCacheKey";
+
         public CLBKS01Controller()
         {
             _objBLBKS01 = new BLBKS01();
@@ -24,8 +28,15 @@ namespace API.Controllers
         [Route("GetAllBooks")]
         public IHttpActionResult GetAllBooks()
         {
-            _objResponse = _objBLBKS01.GetAll();
+            var cachedResponse = CacheHelper.Get(cacheKey);
 
+            if (cachedResponse != null)
+            {
+                return Ok(cachedResponse);
+            }
+
+            _objResponse = _objBLBKS01.GetAll();
+            CacheHelper.Set(cacheKey, _objResponse, TimeSpan.FromSeconds(30));
             return Ok(_objResponse);
         }
 
@@ -56,6 +67,7 @@ namespace API.Controllers
                 _objBLBKS01.Save();
             }
 
+            CacheHelper.Remove(cacheKey);
             return Ok(_objResponse);
         }
 
@@ -78,6 +90,7 @@ namespace API.Controllers
                 _objBLBKS01.Save();
             }
 
+            CacheHelper.Remove(cacheKey);
             return Ok(_objResponse);
         }
 
@@ -93,6 +106,8 @@ namespace API.Controllers
             {
                 _objResponse = _objBLBKS01.Delete();
             }
+
+            CacheHelper.Remove(cacheKey);
             return Ok(_objResponse);
         }
     }

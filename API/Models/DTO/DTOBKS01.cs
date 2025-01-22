@@ -28,7 +28,7 @@ namespace API.Models.DTO
         /// ISBN
         /// </summary>
         [Required(ErrorMessage = "ISBN is required.")]
-        [StringLength(13, ErrorMessage = "ISBN must be 13 digits.")]
+        [StringLength(13, ErrorMessage = "ISBN must be 13 digits.", MinimumLength =13)]
         public string S01F05 { get; set; }
 
         /// <summary>

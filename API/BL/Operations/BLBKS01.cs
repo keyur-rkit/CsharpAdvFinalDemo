@@ -4,6 +4,7 @@ using API.Models;
 using API.Models.DTO;
 using API.Models.Enum;
 using API.Models.POCO;
+using Google.Protobuf.Compiler;
 using ServiceStack.Data;
 using ServiceStack.OrmLite;
 using System;
@@ -59,6 +60,7 @@ namespace API.BL.Operations
                     }
                     _objResponse.IsError = false;
                     _objResponse.Data = result;
+                    _objResponse.Message = "Books get successfully";
                 }
             }
             catch (Exception ex)
@@ -84,6 +86,7 @@ namespace API.BL.Operations
                 using (var db = _dbFactory.OpenDbConnection())
                 {
                     _objResponse.Data = db.SingleById<BKS01>(id);
+                    _objResponse.Message = "Book get successfully";
                     return _objResponse;
                 }
             }
@@ -194,6 +197,38 @@ namespace API.BL.Operations
                 _objResponse.Message = ex.Message;
             }
             return _objResponse;
+        }
+
+        public Response DecreaseOne(int id)
+        {
+            using (var db = _dbFactory.OpenDbConnection())
+            {
+                _objBKS01 = db.SingleById<BKS01>(id);
+
+                if (_objBKS01.S01F06 <= 0)
+                {
+                    _objResponse.IsError = true;
+                    _objResponse.Message = "There is no book available";
+                }
+                else
+                {
+                    _objResponse.IsError = false;
+                    _objResponse.Message = _objBKS01.S01F06 == 1 
+                        ? "Last copy of book" 
+                        : $"{_objBKS01.S01F06} books are available";
+                    db.UpdateAdd(() => new BKS01 { S01F06 = -1 }, where: b => b.S01F01 == id);
+                }
+            }
+
+            return _objResponse;
+        }
+
+        public void IncreaseOne(int id)
+        {
+            using (var db = _dbFactory.OpenDbConnection())
+            {
+                db.UpdateAdd(() => new BKS01 { S01F06 = 1 }, where: b => b.S01F01 == id);
+            }
         }
     }
 }

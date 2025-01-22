@@ -60,9 +60,38 @@ namespace API.BL.Operations
                     }
                     _objResponse.IsError = false;
                     _objResponse.Data = result;
+                    _objResponse.Message = "Users get successfully";
                 }
             }
             catch(Exception ex)
+            {
+                _objResponse.IsError = true;
+                _objResponse.Message = ex.Message;
+            }
+            return _objResponse;
+        }
+
+        public Response GetProfile(int userId)
+        {
+            try
+            {
+                using (var db = _dbFactory.OpenDbConnection())
+                {
+                    var result = db.Select<USR01>(u => u.R01F01 == userId).ToList();
+                    if (result.Count == 0)
+                    {
+                        _objResponse.IsError = true;
+                        _objResponse.Message = "User not available";
+                        _objResponse.Data = null;
+
+                        return _objResponse;
+                    }
+                    _objResponse.IsError = false;
+                    _objResponse.Data = result;
+                    _objResponse.Message = "User get successfully";
+                }
+            }
+            catch (Exception ex)
             {
                 _objResponse.IsError = true;
                 _objResponse.Message = ex.Message;
@@ -180,6 +209,38 @@ namespace API.BL.Operations
                 return db.Single<USR01>(
                     u => u.R01F02 == objAuth.R01F02 
                     && u.R01F04 == encryptedR01F04);
+            }
+        }
+
+        public Response DecreaseOne(int id)
+        {
+            using (var db = _dbFactory.OpenDbConnection())
+            {
+                _objUSR01 = db.SingleById<USR01>(id);
+
+                if (_objUSR01.R01F06 <= 0)
+                {
+                    _objResponse.IsError = true;
+                    _objResponse.Message = "Borrow Limit is over";
+                }
+                else
+                {
+                    _objResponse.IsError = false;
+                    _objResponse.Message = _objUSR01.R01F06 == 1
+                        ? "Borrow Limit is about to over"
+                        : $"{_objUSR01.R01F06} borrow limit available";
+                    db.UpdateAdd(() => new USR01 { R01F06 = -1 }, where: u => u.R01F01 == id);
+                }
+            }
+
+            return _objResponse;
+        }
+
+        public void IncreaseOne(int id)
+        {
+            using (var db = _dbFactory.OpenDbConnection())
+            {
+                db.UpdateAdd(() => new USR01 { R01F06 = 1 }, where: u => u.R01F01 == id);
             }
         }
 
