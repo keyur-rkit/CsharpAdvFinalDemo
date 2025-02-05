@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceStack.DataAnnotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -48,6 +49,7 @@ namespace API.Models.POCO
         /// <summary>
         /// CreatedAt
         /// </summary>
+        [IgnoreOnUpdate]
         public DateTime S01F08 { get; set; } = DateTime.Now;
 
         /// <summary>
