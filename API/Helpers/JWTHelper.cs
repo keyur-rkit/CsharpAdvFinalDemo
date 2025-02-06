@@ -18,12 +18,12 @@ namespace API.Helpers
         /// <returns>A ClaimsPrincipal if the token is valid, otherwise null.</returns>
         public static ClaimsPrincipal ValidateJwtToken(string token)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
-            var handler = new JwtSecurityTokenHandler();
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
+            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
 
             try
             {
-                var parameters = new TokenValidationParameters
+                TokenValidationParameters parameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
@@ -34,7 +34,7 @@ namespace API.Helpers
                 };
 
                 SecurityToken validatedToken;
-                var principal = handler.ValidateToken(token, parameters, out validatedToken);
+                ClaimsPrincipal principal = handler.ValidateToken(token, parameters, out validatedToken);
 
                 return principal;
             }
@@ -52,17 +52,17 @@ namespace API.Helpers
         /// <returns>A string representing the generated JWT token.</returns>
         public static string GenerateJwtToken(string username, int userID, string role)
         {
-            var claims = new[]
+            Claim[] claims = new[]
             {
             new Claim(ClaimTypes.Name, username),
             new Claim(ClaimTypes.Role, role), // Dynamically setting the role
             new Claim(ClaimTypes.NameIdentifier, userID.ToString())
         };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
+            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(
+            JwtSecurityToken token = new JwtSecurityToken(
                 issuer: "Issuer",
                 audience: "Audience",
                 claims: claims,
@@ -76,7 +76,7 @@ namespace API.Helpers
         public static int GetUserIdFromToken(string token)
         {
             JwtSecurityTokenHandler objJwtSecurityTokenHandler = new JwtSecurityTokenHandler();
-            var jsonToken = objJwtSecurityTokenHandler.ReadToken(token) as JwtSecurityToken;
+            JwtSecurityToken jsonToken = objJwtSecurityTokenHandler.ReadToken(token) as JwtSecurityToken;
 
             if (jsonToken == null)
             {
@@ -84,7 +84,7 @@ namespace API.Helpers
             }
 
             // Get the userId claim from the token
-            var userIdClaim = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            Claim userIdClaim = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
             if (userIdClaim != null)
             {

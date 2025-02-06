@@ -9,6 +9,7 @@ using ServiceStack.Data;
 using ServiceStack.OrmLite;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 
@@ -37,7 +38,7 @@ namespace API.BL.Operations
 
         public bool IsExist(int id)
         {
-            using (var db = _dbFactory.OpenDbConnection())
+            using (IDbConnection db = _dbFactory.OpenDbConnection())
             {
                 return db.Exists<BKS01>(c => c.S01F01 == id);
             }
@@ -47,9 +48,9 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
-                    var result = db.Select<BKS01>().ToList();
+                    List<BKS01> result = db.Select<BKS01>().ToList();
                     if (result.Count == 0)
                     {
                         _objResponse.IsError = true;
@@ -83,7 +84,7 @@ namespace API.BL.Operations
 
                     return _objResponse;
                 }
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     _objResponse.Data = db.SingleById<BKS01>(id);
                     _objResponse.Message = "Book get successfully";
@@ -102,7 +103,7 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     db.Insert(objBKS01);
                     _objResponse.Message = "Book Added";
@@ -120,7 +121,7 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     db.Update(objBKS01);
                     _objResponse.Message = $"Book with Id {Id} Edited";
@@ -182,7 +183,7 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     if (Type == EnmType.D)
                     {
@@ -201,7 +202,7 @@ namespace API.BL.Operations
 
         public Response DecreaseOne(int id)
         {
-            using (var db = _dbFactory.OpenDbConnection())
+            using (IDbConnection db = _dbFactory.OpenDbConnection())
             {
                 _objBKS01 = db.SingleById<BKS01>(id);
 
@@ -225,7 +226,7 @@ namespace API.BL.Operations
 
         public void IncreaseOne(int id)
         {
-            using (var db = _dbFactory.OpenDbConnection())
+            using (IDbConnection db = _dbFactory.OpenDbConnection())
             {
                 db.UpdateAdd(() => new BKS01 { S01F06 = 1 }, where: b => b.S01F01 == id);
             }

@@ -9,6 +9,8 @@ using System;
 using System.Linq;
 using System.Web;
 using API.Extensions;
+using System.Data;
+using System.Collections.Generic;
 
 namespace API.BL.Operations
 {
@@ -35,7 +37,7 @@ namespace API.BL.Operations
 
         public bool IsExist(int id)
         {
-            using (var db = _dbFactory.OpenDbConnection())
+            using (IDbConnection db = _dbFactory.OpenDbConnection())
             {
                 return db.Exists<AUH01>(c => c.H01F01 == id);
             }
@@ -45,9 +47,9 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
-                    var result = db.Select<AUH01>().ToList();
+                    List<AUH01> result = db.Select<AUH01>().ToList();
                     if (result.Count == 0)
                     {
                         _objResponse.IsError = true;
@@ -81,7 +83,7 @@ namespace API.BL.Operations
 
                     return _objResponse;
                 }
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     _objResponse.Data = db.SingleById<AUH01>(id);
                     _objResponse.Message = "Author get successfully";
@@ -100,7 +102,7 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     db.Insert(objAUH01);
                     _objResponse.Message = "Auhtor Added";
@@ -118,7 +120,7 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     db.Update(objAUH01);
                     _objResponse.Message = $"Auhtor with Id {Id} Edited";
@@ -180,7 +182,7 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     if (Type == EnmType.D)
                     {

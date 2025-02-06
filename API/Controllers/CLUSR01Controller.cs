@@ -106,13 +106,13 @@ namespace API.Controllers
 
         private string GetTokenFromRequest()
         {
-            var token = string.Empty;
+            string token = string.Empty;
 
             // Check if the Authorization header exists
             if (Request.Headers.Authorization != null)
             {
                 // The token should be in the format 'Bearer <token>'
-                var authorizationHeader = Request.Headers.Authorization.Parameter;
+                string authorizationHeader = Request.Headers.Authorization.Parameter;
                 if (!string.IsNullOrEmpty(authorizationHeader))
                 {
                     token = authorizationHeader;

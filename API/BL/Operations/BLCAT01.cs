@@ -9,6 +9,8 @@ using System.Linq;
 using System.Web;
 using ServiceStack.OrmLite;
 using API.Extensions;
+using System.Data;
+using System.Collections.Generic;
 
 namespace API.BL.Operations
 {
@@ -35,7 +37,7 @@ namespace API.BL.Operations
 
         public bool IsExist(int id)
         {
-            using (var db = _dbFactory.OpenDbConnection())
+            using (IDbConnection db = _dbFactory.OpenDbConnection())
             {
                 return db.Exists<CAT01>(c => c.T01F01 == id);
             }
@@ -45,9 +47,9 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
-                    var result = db.Select<CAT01>().ToList();
+                    List<CAT01> result = db.Select<CAT01>().ToList();
                     if (result.Count == 0)
                     {
                         _objResponse.IsError = true;
@@ -81,7 +83,7 @@ namespace API.BL.Operations
 
                     return _objResponse;
                 }
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     _objResponse.Data = db.SingleById<CAT01>(id);
                     _objResponse.Message = "Category get successfully";
@@ -100,7 +102,7 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     db.Insert(objCAT01);
                     _objResponse.Message = "Category Added";
@@ -118,7 +120,7 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     db.Update(objCAT01);
                     _objResponse.Message = $"Category with Id {Id} Edited";
@@ -180,7 +182,7 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     if (Type == EnmType.D)
                     {

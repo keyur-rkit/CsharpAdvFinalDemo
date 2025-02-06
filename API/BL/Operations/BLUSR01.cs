@@ -9,6 +9,8 @@ using System;
 using System.Web;
 using System.Linq;
 using API.Extensions;
+using System.Data;
+using System.Collections.Generic;
 
 namespace API.BL.Operations
 {
@@ -37,7 +39,7 @@ namespace API.BL.Operations
 
         public bool IsExist(int id)
         {
-            using (var db = _dbFactory.OpenDbConnection())
+            using (IDbConnection db = _dbFactory.OpenDbConnection())
             {
                 return db.Exists<USR01>(u => u.R01F01 == id);
             }
@@ -47,9 +49,9 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
-                    var result = db.Select<USR01>().ToList();
+                    List<USR01> result = db.Select<USR01>().ToList();
                     if (result.Count == 0)
                     {
                         _objResponse.IsError = true;
@@ -75,9 +77,9 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
-                    var result = db.Select<USR01>(u => u.R01F01 == userId).ToList(); 
+                    List<USR01> result = db.Select<USR01>(u => u.R01F01 == userId).ToList(); 
                     _objResponse.IsError = false;
                     _objResponse.Data = result;
                     _objResponse.Message = "User get successfully";
@@ -95,7 +97,7 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     db.Insert(objUSR01);
                     _objResponse.Message = "User Added";
@@ -113,7 +115,7 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     db.Update(objUSR01);
                     _objResponse.Message = $"User with Id {Id} Edited";
@@ -176,7 +178,7 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     if (Type == EnmType.D)
                     {
@@ -206,7 +208,7 @@ namespace API.BL.Operations
         public USR01 GetUser(DTOUSR01Auth objAuth)
         {
             string encryptedR01F04 = BLEncryption.Encrypt(objAuth.R01F04);
-            using (var db = _dbFactory.OpenDbConnection())
+            using (IDbConnection db = _dbFactory.OpenDbConnection())
             {
                 return db.Single<USR01>(
                     u => u.R01F02 == objAuth.R01F02 
@@ -216,7 +218,7 @@ namespace API.BL.Operations
 
         public Response DecreaseOne(int id)
         {
-            using (var db = _dbFactory.OpenDbConnection())
+            using (IDbConnection db = _dbFactory.OpenDbConnection())
             {
                 _objUSR01 = db.SingleById<USR01>(id);
 
@@ -240,7 +242,7 @@ namespace API.BL.Operations
 
         public void IncreaseOne(int id)
         {
-            using (var db = _dbFactory.OpenDbConnection())
+            using (IDbConnection db = _dbFactory.OpenDbConnection())
             {
                 db.UpdateAdd(() => new USR01 { R01F06 = 1 }, where: u => u.R01F01 == id);
             }

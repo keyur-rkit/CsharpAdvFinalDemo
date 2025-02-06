@@ -15,8 +15,8 @@ namespace API
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
-            var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            var dbFactory = new OrmLiteConnectionFactory(connectionString, MySqlDialect.Provider);
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            OrmLiteConnectionFactory dbFactory = new OrmLiteConnectionFactory(connectionString, MySqlDialect.Provider);
 
             Application["DbFactory"] = dbFactory;
         }

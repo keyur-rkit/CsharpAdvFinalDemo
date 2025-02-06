@@ -8,6 +8,8 @@ using ServiceStack;
 using ServiceStack.Data;
 using ServiceStack.OrmLite;
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -42,7 +44,7 @@ namespace API.BL.Operations
 
         public bool IsExist(int id)
         {
-            using (var db = _dbFactory.OpenDbConnection())
+            using (IDbConnection db = _dbFactory.OpenDbConnection())
             {
                 return db.Exists<BRW01>(r => r.W01F01 == id);
             }
@@ -52,9 +54,9 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
-                    var result = db.Select<BRW01>().ToList();
+                    List<BRW01> result = db.Select<BRW01>().ToList();
                     if (result.Count == 0)
                     {
                         _objResponse.IsError = true;
@@ -89,7 +91,7 @@ namespace API.BL.Operations
 
                     return _objResponse;
                 }
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     _objResponse.Data = db.SingleById<BRW01>(id);
                     _objResponse.Message = "Record get successfully";
@@ -108,9 +110,9 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
-                    var result = db.Select<BRW01>(r => r.W01F02 == id).ToList();
+                    List<BRW01> result = db.Select<BRW01>(r => r.W01F02 == id).ToList();
                     if (result.Count == 0)
                     {
                         _objResponse.IsError = true;
@@ -152,7 +154,7 @@ namespace API.BL.Operations
                 }
                 else
                 {
-                    using (var db = _dbFactory.OpenDbConnection())
+                    using (IDbConnection db = _dbFactory.OpenDbConnection())
                     {
                         db.Insert(_objBRW01);
                     }
@@ -174,7 +176,7 @@ namespace API.BL.Operations
         {
             try
             {
-                using (var db = _dbFactory.OpenDbConnection())
+                using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     _objBRW01 = db.Single<BRW01>(b => b.W01F01 == id);
 
@@ -249,9 +251,9 @@ namespace API.BL.Operations
 
         public Response Backup()
         {
-            using (var db = _dbFactory.OpenDbConnection())
+            using (IDbConnection db = _dbFactory.OpenDbConnection())
             {
-                var result = db.Select<BRW01>().ToList();
+                List<BRW01> result = db.Select<BRW01>().ToList();
                 if (result.Count == 0)
                 {
                     _objResponse.IsError = true;
