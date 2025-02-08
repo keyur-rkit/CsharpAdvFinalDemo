@@ -7,6 +7,9 @@ using API.Models.Enum;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// Controller to handle CRUD of CAT01
+    /// </summary>
     [RoutePrefix("api/Categories")]
     public class CLCAT01Controller : ApiController
     {

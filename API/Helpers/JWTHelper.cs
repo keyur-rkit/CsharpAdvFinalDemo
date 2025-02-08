@@ -7,9 +7,12 @@ using System.Linq;
 
 namespace API.Helpers
 {
+    /// <summary>
+    /// Helper for JWT generation and validation
+    /// </summary>
     public class JWTHelper
     {
-        private const string SecretKey = "RuyekAvdaras417107701741SaradvaKeyur"; // The secret key used for token validation.
+        private const string SecretKey = "RuyekAvdaras417107701741SaradvaKeyur"; // The secret key 
 
         /// <summary>
         /// Validates the JWT token and returns the ClaimsPrincipal if valid.
@@ -73,6 +76,12 @@ namespace API.Helpers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        /// <summary>
+        /// Method to get userID from JWT token
+        /// </summary>
+        /// <param name="token">JWT token</param>
+        /// <returns>userId</returns>
+        /// <exception cref="UnauthorizedAccessException"></exception>
         public static int GetUserIdFromToken(string token)
         {
             JwtSecurityTokenHandler objJwtSecurityTokenHandler = new JwtSecurityTokenHandler();

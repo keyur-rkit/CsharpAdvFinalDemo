@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Models.DTO
 {
+    /// <summary>
+    /// DTO for POCO BKS01
+    /// </summary>
     public class DTOBKS01
     {
         /// <summary>

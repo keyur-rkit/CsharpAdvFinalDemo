@@ -2,6 +2,9 @@
 
 namespace API.Models.Enum
 {
+    /// <summary>
+    /// Enum for user role
+    /// </summary>
     public enum EnmRole
     {
        /// <summary>

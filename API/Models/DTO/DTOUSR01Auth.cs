@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Models.DTO
 {
+    /// <summary>
+    /// DTO for Authentication
+    /// </summary>
     public class DTOUSR01Auth
     {
         /// <summary>

@@ -7,6 +7,9 @@ using System.Web.Http;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// Controller to handle Authentication 
+    /// </summary>
     [RoutePrefix("api/Auth")]
     [AllowAnonymous]
     public class CLUSR01AuthController : ApiController

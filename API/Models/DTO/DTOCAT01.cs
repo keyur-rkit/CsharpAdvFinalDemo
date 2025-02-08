@@ -3,6 +3,9 @@
 
 namespace API.Models.DTO
 {
+    /// <summary>
+    /// DTO for POCO CAT01
+    /// </summary>
     public class DTOCAT01
     {
         /// <summary>

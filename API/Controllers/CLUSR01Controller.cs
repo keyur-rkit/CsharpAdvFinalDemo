@@ -9,6 +9,9 @@ using API.Helpers;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// Controller to handle CRUD of USR01
+    /// </summary>
     [RoutePrefix("api/Users")]
     public class CLUSR01Controller : ApiController
     {

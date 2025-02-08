@@ -9,6 +9,9 @@ using API.Helpers;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// Controller to handle CRUD of BRW01
+    /// </summary>
     [RoutePrefix("api/Records")]
     public class CLBRW01Controller : ApiController
     {
@@ -54,8 +57,8 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [JWTAuthorizationFilter("Admin")]
         [Route("BorrowBook")]
+        [JWTAuthorizationFilter("Admin")]
         public IHttpActionResult BorrowBook(DTOBRW01 objDTOBRW01)
         {
             if (!ModelState.IsValid)
@@ -75,8 +78,8 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [JWTAuthorizationFilter("Admin")]
         [Route("ReturnBook")]
+        [JWTAuthorizationFilter("Admin")]
         public IHttpActionResult ReturnBook(int recordId , DateTime returnDate)
         {
             _objBLBRW01.Type = EnmType.E;
@@ -94,6 +97,7 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("BackupRecords")]
+        [JWTAuthorizationFilter("Admin")]
         public IHttpActionResult BackupRecords()
         {
             _objResponse = _objBLBRW01.Backup();

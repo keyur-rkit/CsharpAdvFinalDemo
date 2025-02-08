@@ -2,6 +2,9 @@
 
 namespace API.Models.Enum
 {
+    /// <summary>
+    /// Enum for entry type
+    /// </summary>
     public enum EnmType
     {
         /// <summary>

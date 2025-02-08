@@ -12,6 +12,9 @@ using System.Web.Http;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// Controller to handle CRUD of AUH01
+    /// </summary>
     [RoutePrefix("api/Authors")]
     public class CLAUH01Controller : ApiController
     {

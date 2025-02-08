@@ -6,8 +6,17 @@ using System.Web;
 
 namespace API.Extensions
 {
+    /// <summary>
+    /// static to contain DTO to POCO converter
+    /// </summary>
     public static class DTOToPOCO
     {
+        /// <summary>
+        /// Extension method on DTO object to convert into POCO
+        /// </summary>
+        /// <typeparam name="POCO"></typeparam>
+        /// <param name="objDTO">to extend obj of DTO</param>
+        /// <returns>POCO instance</returns>
         public static POCO Convert<POCO>(this object objDTO)
         {
             // Get the type of the POCO

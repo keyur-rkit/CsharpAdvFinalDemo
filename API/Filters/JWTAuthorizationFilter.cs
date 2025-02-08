@@ -9,6 +9,9 @@ using API.Helpers;
 
 namespace API.Filters
 {
+    /// <summary>
+    /// Filter attribute to handle JWTAuthorization
+    /// </summary>
     public class JWTAuthorizationFilter : AuthorizationFilterAttribute
     {
         private readonly string[] _allowedRoles;

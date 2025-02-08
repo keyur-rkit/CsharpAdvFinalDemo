@@ -10,6 +10,9 @@ using System.Web.Http;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// Controller to handle CRUD of BKS01
+    /// </summary>
     [RoutePrefix("api/Books")]
     public class CLBKS01Controller : ApiController
     {

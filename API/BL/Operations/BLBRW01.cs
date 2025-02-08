@@ -263,16 +263,16 @@ namespace API.BL.Operations
                     return _objResponse;
                 }
 
-                string backup = HttpContext.Current.Server.MapPath("~/Backup");
+                string backup = @"F:\Keyur-417\Code\CsharpAdvFinalDemo\API\Backup";
                 if (!backup.DirectoryExists())
                 {
                     Directory.CreateDirectory(backup);
                 }
-                string pathOfBackup = Path.Combine(backup, "backupData.csv");
+                string pathOfBackup = backup + @"\backupData.csv";
 
                 using(StreamWriter sw  = new StreamWriter(pathOfBackup))
                 {
-                    sw.WriteLine($"R01F01,R01F02,R01F03,R01F04,R01F05,R01F06,R01F07");
+                    sw.WriteLine($"W01F01,W01F02,W01F03,W01F04,W01F05,W01F06,W01F07");
 
                     foreach(BRW01 item in result)
                     {   dynamic temp;
