@@ -24,7 +24,10 @@ namespace API.Controllers
             _objResponse = new Response();
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAllUsers")]
         [JWTAuthorizationFilter("Admin")]
@@ -35,6 +38,10 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetUserProfile")]
         [JWTAuthorizationFilter]
@@ -48,6 +55,11 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objDTOUSR01"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("AddUser")]
         [JWTAuthorizationFilter("Admin")]
@@ -70,6 +82,12 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="objDTOUSR01"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("EditUser")]
         [JWTAuthorizationFilter("Admin")]
@@ -92,6 +110,11 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("DeleteUser")]
         [JWTAuthorizationFilter("Admin")]

@@ -15,6 +15,9 @@ using System.Web;
 
 namespace API.BL.Operations
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class BLBKS01 : IDataHandler<DTOBKS01>
     {
         private BKS01 _objBKS01;
@@ -36,6 +39,11 @@ namespace API.BL.Operations
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool IsExist(int id)
         {
             using (IDbConnection db = _dbFactory.OpenDbConnection())
@@ -44,6 +52,10 @@ namespace API.BL.Operations
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response GetAll()
         {
             try
@@ -72,6 +84,11 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Response GetById(int id)
         {
             try
@@ -99,14 +116,21 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objBKS01"></param>
+        /// <returns></returns>
         public Response Add(BKS01 objBKS01)
         {
             try
             {
                 using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
-                    db.Insert(objBKS01);
-                    _objResponse.Message = "Book Added";
+                    objBKS01.S01F01 = (int)db.Insert(objBKS01, selectIdentity: true);
+                    _objResponse.Message = $"Book Added with Id {objBKS01.S01F01}";
+                    //db.Insert(objBKS01);
+                    //_objResponse.Message = "Book Added";
                 }
             }
             catch (Exception ex)
@@ -117,6 +141,11 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objBKS01"></param>
+        /// <returns></returns>
         public Response Edit(BKS01 objBKS01)
         {
             try
@@ -135,6 +164,10 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objDTO"></param>
         public void PreSave(DTOBKS01 objDTO)
         {
             _objBKS01 = objDTO.Convert<BKS01>();
@@ -145,6 +178,10 @@ namespace API.BL.Operations
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response Validation()
         {
             if (Type == EnmType.E || Type == EnmType.D)
@@ -164,6 +201,10 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response Save()
         {
 
@@ -179,6 +220,10 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response Delete()
         {
             try
@@ -200,6 +245,11 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Response DecreaseOne(int id)
         {
             using (IDbConnection db = _dbFactory.OpenDbConnection())
@@ -224,6 +274,10 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
         public void IncreaseOne(int id)
         {
             using (IDbConnection db = _dbFactory.OpenDbConnection())

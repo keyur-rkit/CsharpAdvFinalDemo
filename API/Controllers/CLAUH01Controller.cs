@@ -27,6 +27,10 @@ namespace API.Controllers
             _objResponse = new Response();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAllAuthors")]
         public IHttpActionResult GetAllAuthors()
@@ -36,6 +40,11 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAuthorById")]
         public IHttpActionResult GetAuthorById(int id)
@@ -43,7 +52,12 @@ namespace API.Controllers
             _objResponse = _objBLAUH01.GetById(id);
             return Ok(_objResponse);
         }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objDTOAUH01"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("AddAuthor")]
         [JWTAuthorizationFilter("Admin")]
@@ -66,6 +80,12 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="objDTOAUH01"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("EditAuhtor")]
         [JWTAuthorizationFilter("Admin")]
@@ -88,6 +108,11 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("DeleteAuthor")]
         [JWTAuthorizationFilter("Admin")]

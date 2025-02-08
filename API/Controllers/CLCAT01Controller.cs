@@ -22,6 +22,10 @@ namespace API.Controllers
             _objResponse = new Response();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAllCategories")]
         public IHttpActionResult GetAllCategories()
@@ -31,6 +35,11 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetCategoryById")]
         public IHttpActionResult GetCategoryById(int id)
@@ -39,6 +48,11 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objDTOCAT01"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("AddCategory")]
         [JWTAuthorizationFilter("Admin")]
@@ -61,6 +75,12 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="objDTOCAT01"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("EditCategory")]
         [JWTAuthorizationFilter("Admin")]
@@ -83,6 +103,11 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("DeleteCategory")]
         [JWTAuthorizationFilter("Admin")]

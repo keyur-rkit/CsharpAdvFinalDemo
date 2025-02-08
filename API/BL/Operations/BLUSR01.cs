@@ -14,6 +14,9 @@ using System.Collections.Generic;
 
 namespace API.BL.Operations
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class BLUSR01 : IDataHandler<DTOUSR01>
     {
         private USR01 _objUSR01;
@@ -37,6 +40,11 @@ namespace API.BL.Operations
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool IsExist(int id)
         {
             using (IDbConnection db = _dbFactory.OpenDbConnection())
@@ -44,7 +52,11 @@ namespace API.BL.Operations
                 return db.Exists<USR01>(u => u.R01F01 == id);
             }
         }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response GetAll()
         {
             try
@@ -73,6 +85,11 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public Response GetProfile(int userId)
         {
             try
@@ -93,14 +110,21 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objUSR01"></param>
+        /// <returns></returns>
         public Response Add(USR01 objUSR01)
         {
             try
             {
                 using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
-                    db.Insert(objUSR01);
-                    _objResponse.Message = "User Added";
+                    objUSR01.R01F01 = (int)db.Insert(objUSR01, selectIdentity: true);
+                    _objResponse.Message = $"User Added with Id {objUSR01.R01F01}";
+                    //db.Insert(objUSR01);
+                    //_objResponse.Message = "User Added";
                 }
             }
             catch (Exception ex)
@@ -111,6 +135,11 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objUSR01"></param>
+        /// <returns></returns>
         public Response Edit(USR01 objUSR01)
         {
             try
@@ -129,6 +158,10 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objDTO"></param>
         public void PreSave(DTOUSR01 objDTO)
         {
             _objUSR01 = objDTO.Convert<USR01>();
@@ -140,6 +173,10 @@ namespace API.BL.Operations
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response Validation()
         {
             if(Type == EnmType.E || Type == EnmType.D)
@@ -159,6 +196,10 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response Save()
         {
 
@@ -174,6 +215,10 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response Delete()
         {
             try
@@ -205,6 +250,11 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objAuth"></param>
+        /// <returns></returns>
         public USR01 GetUser(DTOUSR01Auth objAuth)
         {
             string encryptedR01F04 = BLEncryption.Encrypt(objAuth.R01F04);
@@ -216,6 +266,11 @@ namespace API.BL.Operations
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Response DecreaseOne(int id)
         {
             using (IDbConnection db = _dbFactory.OpenDbConnection())
@@ -240,6 +295,10 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
         public void IncreaseOne(int id)
         {
             using (IDbConnection db = _dbFactory.OpenDbConnection())

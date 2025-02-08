@@ -27,6 +27,10 @@ namespace API.Controllers
             _objResponse = new Response();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAllBooks")]
         public IHttpActionResult GetAllBooks()
@@ -43,6 +47,11 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetBookById")]
         public IHttpActionResult GetBookById(int id)
@@ -51,6 +60,11 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objDTOBKS01"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("AddBook")]
         [JWTAuthorizationFilter("Admin")]
@@ -74,6 +88,12 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="objDTOBKS01"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("EditBook")]
         [JWTAuthorizationFilter("Admin")]
@@ -97,6 +117,11 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("DeleteBook")]
         [JWTAuthorizationFilter("Admin")]

@@ -24,6 +24,11 @@ namespace API.Controllers
             _objResponse = new Response();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objAuth"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("GetToken")]
         public IHttpActionResult GetToken(DTOUSR01Auth objAuth)

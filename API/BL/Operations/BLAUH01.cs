@@ -14,6 +14,9 @@ using System.Collections.Generic;
 
 namespace API.BL.Operations
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class BLAUH01 : IDataHandler<DTOAUH01>
     {
         private AUH01 _objAUH01;
@@ -35,6 +38,11 @@ namespace API.BL.Operations
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool IsExist(int id)
         {
             using (IDbConnection db = _dbFactory.OpenDbConnection())
@@ -43,6 +51,10 @@ namespace API.BL.Operations
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response GetAll()
         {
             try
@@ -71,6 +83,11 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Response GetById(int id)
         {
             try
@@ -98,14 +115,21 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objAUH01"></param>
+        /// <returns></returns>
         public Response Add(AUH01 objAUH01)
         {
             try
             {
                 using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
-                    db.Insert(objAUH01);
-                    _objResponse.Message = "Auhtor Added";
+                    objAUH01.H01F01 = (int)db.Insert(objAUH01, selectIdentity: true);
+                    _objResponse.Message = $"Auhtor Added with Id {objAUH01.H01F01}";
+                    //db.Insert(objAUH01);
+                    //_objResponse.Message = "Auhtor Added";
                 }
             }
             catch (Exception ex)
@@ -116,6 +140,11 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objAUH01"></param>
+        /// <returns></returns>
         public Response Edit(AUH01 objAUH01)
         {
             try
@@ -134,6 +163,10 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objDTO"></param>
         public void PreSave(DTOAUH01 objDTO)
         {
             _objAUH01 = objDTO.Convert<AUH01>();
@@ -144,6 +177,10 @@ namespace API.BL.Operations
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response Validation()
         {
             if (Type == EnmType.E || Type == EnmType.D)
@@ -163,6 +200,10 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response Save()
         {
 
@@ -178,6 +219,10 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response Delete()
         {
             try

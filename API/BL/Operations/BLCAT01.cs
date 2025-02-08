@@ -14,6 +14,9 @@ using System.Collections.Generic;
 
 namespace API.BL.Operations
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class BLCAT01 : IDataHandler<DTOCAT01>
     {
         private CAT01 _objCAT01;
@@ -35,6 +38,11 @@ namespace API.BL.Operations
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool IsExist(int id)
         {
             using (IDbConnection db = _dbFactory.OpenDbConnection())
@@ -43,6 +51,10 @@ namespace API.BL.Operations
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response GetAll()
         {
             try
@@ -71,6 +83,11 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Response GetById(int id)
         {
             try
@@ -98,14 +115,21 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objCAT01"></param>
+        /// <returns></returns>
         public Response Add(CAT01 objCAT01)
         {
             try
             {
                 using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
-                    db.Insert(objCAT01);
-                    _objResponse.Message = "Category Added";
+                    objCAT01.T01F01 = (int)db.Insert(objCAT01, selectIdentity: true);
+                    _objResponse.Message = $"Category Added with Id {objCAT01.T01F01}";
+                    //db.Insert(objCAT01);
+                    //_objResponse.Message = "Category Added";
                 }
             }
             catch (Exception ex)
@@ -116,6 +140,11 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objCAT01"></param>
+        /// <returns></returns>
         public Response Edit(CAT01 objCAT01)
         {
             try
@@ -134,6 +163,10 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objDTO"></param>
         public void PreSave(DTOCAT01 objDTO)
         {
             _objCAT01 = objDTO.Convert<CAT01>();
@@ -144,6 +177,10 @@ namespace API.BL.Operations
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response Validation()
         {
             if (Type == EnmType.E || Type == EnmType.D)
@@ -163,6 +200,10 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response Save()
         {
 
@@ -178,6 +219,10 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response Delete()
         {
             try

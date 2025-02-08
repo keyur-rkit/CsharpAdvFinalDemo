@@ -24,6 +24,10 @@ namespace API.Controllers
             _objBLBRW01 = new BLBRW01();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAllRecords")]
         [JWTAuthorizationFilter("Admin")]
@@ -34,6 +38,11 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetRecordById")]
         [JWTAuthorizationFilter("Admin")]
@@ -43,6 +52,10 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetRecordsByUser")]
         [JWTAuthorizationFilter]
@@ -56,6 +69,11 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objDTOBRW01"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("BorrowBook")]
         [JWTAuthorizationFilter("Admin")]
@@ -77,6 +95,12 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="recordId"></param>
+        /// <param name="returnDate"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("ReturnBook")]
         [JWTAuthorizationFilter("Admin")]
@@ -95,6 +119,10 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("BackupRecords")]
         [JWTAuthorizationFilter("Admin")]

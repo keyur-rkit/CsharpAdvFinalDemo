@@ -16,6 +16,9 @@ using System.Web;
 
 namespace API.BL.Operations
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class BLBRW01 : IDataHandler<DTOBRW01>
     {
         private BRW01 _objBRW01;
@@ -42,6 +45,11 @@ namespace API.BL.Operations
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool IsExist(int id)
         {
             using (IDbConnection db = _dbFactory.OpenDbConnection())
@@ -50,6 +58,10 @@ namespace API.BL.Operations
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response GetAll()
         {
             try
@@ -79,6 +91,11 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Response GetById(int id)
         {
             try
@@ -106,6 +123,11 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Response GetByUser(int id)
         {
             try
@@ -135,6 +157,11 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objBRW01"></param>
+        /// <returns></returns>
         public Response Borrow(BRW01 objBRW01)
         {
             try
@@ -172,6 +199,12 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="returnDate"></param>
+        /// <returns></returns>
         public Response Return(int id, DateTime returnDate)
         {
             try
@@ -212,10 +245,19 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objDTO"></param>
         public void PreSave(DTOBRW01 objDTO)
         {
             _objBRW01 = objDTO.Convert<BRW01>();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response Validation()
         {
             if(Type == EnmType.E)
@@ -235,6 +277,10 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response Save()
         {
             if(Type == EnmType.A)
@@ -249,6 +295,10 @@ namespace API.BL.Operations
             return _objResponse;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Response Backup()
         {
             using (IDbConnection db = _dbFactory.OpenDbConnection())
