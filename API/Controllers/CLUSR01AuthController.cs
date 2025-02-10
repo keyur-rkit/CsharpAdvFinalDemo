@@ -25,10 +25,10 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Generate JWT token for user authentication
         /// </summary>
-        /// <param name="objAuth"></param>
-        /// <returns></returns>
+        /// <param name="objAuth">Authentication data</param>
+        /// <returns>JWT token if authentication is successful</returns>
         [HttpPost]
         [Route("GetToken")]
         public IHttpActionResult GetToken(DTOUSR01Auth objAuth)
@@ -43,8 +43,8 @@ namespace API.Controllers
             if(_objUSR01 != null)
             {
                 _objResponse.Data = JWTHelper.GenerateJwtToken(
-                    _objUSR01.R01F02,_objUSR01.R01F01,_objUSR01.R01F05.ToString());
-                _objResponse.Message = "Authentication Successfull";
+                    _objUSR01.R01F02, _objUSR01.R01F01, _objUSR01.R01F05.ToString());
+                _objResponse.Message = "Authentication Successful";
             }
             else
             {

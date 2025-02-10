@@ -28,9 +28,9 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get all books
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of all books</returns>
         [HttpGet]
         [Route("GetAllBooks")]
         public IHttpActionResult GetAllBooks()
@@ -48,10 +48,10 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get book by ID
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Book ID</param>
+        /// <returns>Book details</returns>
         [HttpGet]
         [Route("GetBookById")]
         public IHttpActionResult GetBookById(int id)
@@ -61,10 +61,10 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Add a new book
         /// </summary>
-        /// <param name="objDTOBKS01"></param>
-        /// <returns></returns>
+        /// <param name="objDTOBKS01">Book data to add</param>
+        /// <returns>Response of the add operation</returns>
         [HttpPost]
         [Route("AddBook")]
         [JWTAuthorizationFilter("Admin")]
@@ -89,11 +89,11 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Edit an existing book
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="objDTOBKS01"></param>
-        /// <returns></returns>
+        /// <param name="id">Book ID</param>
+        /// <param name="objDTOBKS01">Updated book data</param>
+        /// <returns>Response of the edit operation</returns>
         [HttpPut]
         [Route("EditBook")]
         [JWTAuthorizationFilter("Admin")]
@@ -118,10 +118,10 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Delete a book
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Book ID</param>
+        /// <returns>Response of the delete operation</returns>
         [HttpDelete]
         [Route("DeleteBook")]
         [JWTAuthorizationFilter("Admin")]

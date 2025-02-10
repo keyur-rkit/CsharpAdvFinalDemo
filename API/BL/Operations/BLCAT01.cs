@@ -15,7 +15,7 @@ using System.Collections.Generic;
 namespace API.BL.Operations
 {
     /// <summary>
-    /// 
+    /// Business logic for operations on CAT01 (Category)
     /// </summary>
     public class BLCAT01 : IDataHandler<DTOCAT01>
     {
@@ -39,10 +39,10 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Check if category exists by ID
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Category ID</param>
+        /// <returns>True if category exists, otherwise false</returns>
         public bool IsExist(int id)
         {
             using (IDbConnection db = _dbFactory.OpenDbConnection())
@@ -52,9 +52,9 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Get all categories
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response containing list of categories</returns>
         public Response GetAll()
         {
             try
@@ -72,7 +72,7 @@ namespace API.BL.Operations
                     }
                     _objResponse.IsError = false;
                     _objResponse.Data = result;
-                    _objResponse.Message = "Categories get successfully";
+                    _objResponse.Message = "Categories retrieved successfully";
                 }
             }
             catch (Exception ex)
@@ -84,10 +84,10 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Get category by ID
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Category ID</param>
+        /// <returns>Response containing category details</returns>
         public Response GetById(int id)
         {
             try
@@ -95,7 +95,7 @@ namespace API.BL.Operations
                 if (!IsExist(id))
                 {
                     _objResponse.IsError = true;
-                    _objResponse.Message = "Category dose not Exist";
+                    _objResponse.Message = "Category does not exist";
                     _objResponse.Data = null;
 
                     return _objResponse;
@@ -103,7 +103,7 @@ namespace API.BL.Operations
                 using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     _objResponse.Data = db.SingleById<CAT01>(id);
-                    _objResponse.Message = "Category get successfully";
+                    _objResponse.Message = "Category retrieved successfully";
                     return _objResponse;
                 }
             }
@@ -116,10 +116,10 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Add a new category
         /// </summary>
-        /// <param name="objCAT01"></param>
-        /// <returns></returns>
+        /// <param name="objCAT01">Category object</param>
+        /// <returns>Response of the add operation</returns>
         public Response Add(CAT01 objCAT01)
         {
             try
@@ -127,9 +127,7 @@ namespace API.BL.Operations
                 using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     objCAT01.T01F01 = (int)db.Insert(objCAT01, selectIdentity: true);
-                    _objResponse.Message = $"Category Added with Id {objCAT01.T01F01}";
-                    //db.Insert(objCAT01);
-                    //_objResponse.Message = "Category Added";
+                    _objResponse.Message = $"Category added with Id {objCAT01.T01F01}";
                 }
             }
             catch (Exception ex)
@@ -141,10 +139,10 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Edit an existing category
         /// </summary>
-        /// <param name="objCAT01"></param>
-        /// <returns></returns>
+        /// <param name="objCAT01">Category object</param>
+        /// <returns>Response of the edit operation</returns>
         public Response Edit(CAT01 objCAT01)
         {
             try
@@ -152,7 +150,7 @@ namespace API.BL.Operations
                 using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     db.Update(objCAT01);
-                    _objResponse.Message = $"Category with Id {Id} Edited";
+                    _objResponse.Message = $"Category with Id {Id} edited";
                 }
             }
             catch (Exception ex)
@@ -164,9 +162,9 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Prepare category object before save
         /// </summary>
-        /// <param name="objDTO"></param>
+        /// <param name="objDTO">Category DTO object</param>
         public void PreSave(DTOCAT01 objDTO)
         {
             _objCAT01 = objDTO.Convert<CAT01>();
@@ -178,9 +176,9 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Validate category data before save
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response of the validation</returns>
         public Response Validation()
         {
             if (Type == EnmType.E || Type == EnmType.D)
@@ -201,12 +199,11 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Save category data
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response of the save operation</returns>
         public Response Save()
         {
-
             if (Type == EnmType.A)
             {
                 return Add(_objCAT01);
@@ -220,9 +217,9 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Delete a category
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response of the delete operation</returns>
         public Response Delete()
         {
             try
@@ -232,7 +229,7 @@ namespace API.BL.Operations
                     if (Type == EnmType.D)
                     {
                         db.DeleteById<CAT01>(Id);
-                        _objResponse.Message = $"Category with Id {Id} Deleted";
+                        _objResponse.Message = $"Category with Id {Id} deleted";
                     }
                 }
             }

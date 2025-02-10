@@ -4,6 +4,9 @@ using System.Text;
 
 namespace API.BL.Operations
 {
+    /// <summary>
+    /// Provides AES encryption and decryption methods.
+    /// </summary>
     public class BLEncryption
     {
         private static AesCryptoServiceProvider _objAes = new AesCryptoServiceProvider();
@@ -12,7 +15,12 @@ namespace API.BL.Operations
         private static string AesKey = "Ruyek107701KeyurRuyek107701Keyur";  // 32 characters = 256-bit key
         private static string AesIv = "library107417Key";   // 16 characters = 128-bit IV
 
-        // Encrypt method with predefined key and IV
+        /// <summary>
+        /// Encrypts a plain text using AES algorithm.
+        /// </summary>
+        /// <param name="plainText">The text to be encrypted.</param>
+        /// <returns>Encrypted text in Base64 format.</returns>
+        /// <exception cref="ArgumentException">Thrown when key or IV length is incorrect.</exception>
         public static string Encrypt(string plainText)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(plainText);
@@ -37,7 +45,12 @@ namespace API.BL.Operations
             }
         }
 
-        // Decrypt method with predefined key and IV
+        /// <summary>
+        /// Decrypts a cipher text using AES algorithm.
+        /// </summary>
+        /// <param name="cipherText">The text to be decrypted.</param>
+        /// <returns>Decrypted plain text.</returns>
+        /// <exception cref="ArgumentException">Thrown when key or IV length is incorrect.</exception>
         public static string Decrypt(string cipherText)
         {
             byte[] bytes = Convert.FromBase64String(cipherText);

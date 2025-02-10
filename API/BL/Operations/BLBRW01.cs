@@ -17,7 +17,7 @@ using System.Web;
 namespace API.BL.Operations
 {
     /// <summary>
-    /// 
+    /// Business logic for operations on BRW01 (Borrow Records)
     /// </summary>
     public class BLBRW01 : IDataHandler<DTOBRW01>
     {
@@ -46,10 +46,10 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Check if record exists by ID
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Record ID</param>
+        /// <returns>True if record exists, otherwise false</returns>
         public bool IsExist(int id)
         {
             using (IDbConnection db = _dbFactory.OpenDbConnection())
@@ -59,9 +59,9 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Get all records
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response containing list of records</returns>
         public Response GetAll()
         {
             try
@@ -79,7 +79,7 @@ namespace API.BL.Operations
                     }
                     _objResponse.IsError = false;
                     _objResponse.Data = result;
-                    _objResponse.Message = "Records get successfully";
+                    _objResponse.Message = "Records retrieved successfully";
                 }
             }
             catch (Exception ex)
@@ -92,10 +92,10 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Get record by ID
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Record ID</param>
+        /// <returns>Response containing record details</returns>
         public Response GetById(int id)
         {
             try
@@ -103,7 +103,7 @@ namespace API.BL.Operations
                 if (!IsExist(id))
                 {
                     _objResponse.IsError = true;
-                    _objResponse.Message = "Record dose not Exist";
+                    _objResponse.Message = "Record does not exist";
                     _objResponse.Data = null;
 
                     return _objResponse;
@@ -111,7 +111,7 @@ namespace API.BL.Operations
                 using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     _objResponse.Data = db.SingleById<BRW01>(id);
-                    _objResponse.Message = "Record get successfully";
+                    _objResponse.Message = "Record retrieved successfully";
                     return _objResponse;
                 }
             }
@@ -124,10 +124,10 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Get records by user ID
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">User ID</param>
+        /// <returns>Response containing list of user records</returns>
         public Response GetByUser(int id)
         {
             try
@@ -145,7 +145,7 @@ namespace API.BL.Operations
                     }
                     _objResponse.IsError = false;
                     _objResponse.Data = result;
-                    _objResponse.Message = "Records get successfully";
+                    _objResponse.Message = "Records retrieved successfully";
                 }
             }
             catch (Exception ex)
@@ -158,10 +158,10 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Borrow a book
         /// </summary>
-        /// <param name="objBRW01"></param>
-        /// <returns></returns>
+        /// <param name="objBRW01">Borrow record object</param>
+        /// <returns>Response of the borrow operation</returns>
         public Response Borrow(BRW01 objBRW01)
         {
             try
@@ -187,10 +187,10 @@ namespace API.BL.Operations
                     }
 
                     _objResponse.IsError = false;
-                    _objResponse.Message = $"{bookResponse.Message}, {userResponse.Message}, Record Added";
+                    _objResponse.Message = $"{bookResponse.Message}, {userResponse.Message}, Record added";
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _objResponse.IsError = true;
                 _objResponse.Message = ex.Message;
@@ -200,11 +200,11 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Return a borrowed book
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="returnDate"></param>
-        /// <returns></returns>
+        /// <param name="id">Record ID</param>
+        /// <param name="returnDate">Return date</param>
+        /// <returns>Response of the return operation</returns>
         public Response Return(int id, DateTime returnDate)
         {
             try
@@ -216,14 +216,14 @@ namespace API.BL.Operations
                     if (_objBRW01.W01F05 != null)
                     {
                         _objResponse.IsError = true;
-                        _objResponse.Message = "Book returned already";
+                        _objResponse.Message = "Book already returned";
                         return _objResponse;
                     }
 
-                    if(returnDate < _objBRW01.W01F04)
+                    if (returnDate < _objBRW01.W01F04)
                     {
                         _objResponse.IsError = true;
-                        _objResponse.Message = "ReturnDate must be after BorrowDate";
+                        _objResponse.Message = "Return date must be after borrow date";
                         return _objResponse;
                     }
 
@@ -233,10 +233,9 @@ namespace API.BL.Operations
                     _objBLUSR01.IncreaseOne(_objBRW01.W01F02);
                     _objResponse.IsError = false;
                     _objResponse.Message = "Book returned successfully";
-
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _objResponse.IsError = true;
                 _objResponse.Message = ex.Message;
@@ -246,21 +245,21 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Prepare borrow record object before save
         /// </summary>
-        /// <param name="objDTO"></param>
+        /// <param name="objDTO">Borrow record DTO object</param>
         public void PreSave(DTOBRW01 objDTO)
         {
             _objBRW01 = objDTO.Convert<BRW01>();
         }
 
         /// <summary>
-        /// 
+        /// Validate borrow record data before save
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response of the validation</returns>
         public Response Validation()
         {
-            if(Type == EnmType.E)
+            if (Type == EnmType.E)
             {
                 if (Id <= 0)
                 {
@@ -278,27 +277,27 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Save borrow record data
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response of the save operation</returns>
         public Response Save()
         {
-            if(Type == EnmType.A)
+            if (Type == EnmType.A)
             {
                 return Borrow(_objBRW01);
             }
-            else if(Type == EnmType.E)
+            else if (Type == EnmType.E)
             {
-                return Return(Id,ReturnDate);
+                return Return(Id, ReturnDate);
             }
 
             return _objResponse;
         }
 
         /// <summary>
-        /// 
+        /// Backup all borrow records
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response of the backup operation</returns>
         public Response Backup()
         {
             using (IDbConnection db = _dbFactory.OpenDbConnection())
@@ -320,32 +319,22 @@ namespace API.BL.Operations
                 }
                 string pathOfBackup = backup + @"\backupData.csv";
 
-                using(StreamWriter sw  = new StreamWriter(pathOfBackup))
+                using (StreamWriter sw = new StreamWriter(pathOfBackup))
                 {
                     sw.WriteLine($"W01F01,W01F02,W01F03,W01F04,W01F05,W01F06,W01F07");
 
-                    foreach(BRW01 item in result)
-                    {   dynamic temp;
-                        if(item.W01F05 == null)
-                        {
-                            temp = "NULL";
-                        }
-                        else
-                        {
-                            temp = item.W01F05;
-                        }
-
+                    foreach (BRW01 item in result)
+                    {
+                        dynamic temp = item.W01F05 ?? "NULL";
                         sw.WriteLine($"{item.W01F01},{item.W01F02},{item.W01F03},{item.W01F04},{temp},{item.W01F06},{item.W01F07}");
                     }
                 }
 
                 _objResponse.IsError = false;
-                //_objResponse.Data = result;
-                _objResponse.Message = "Records backup successfull";
+                _objResponse.Message = "Records backup successful";
             }
 
             return _objResponse;
         }
-
     }
 }

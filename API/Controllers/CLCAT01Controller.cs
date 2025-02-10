@@ -23,9 +23,9 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get all categories
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of all categories</returns>
         [HttpGet]
         [Route("GetAllCategories")]
         public IHttpActionResult GetAllCategories()
@@ -36,10 +36,10 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get category by ID
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Category ID</param>
+        /// <returns>Category details</returns>
         [HttpGet]
         [Route("GetCategoryById")]
         public IHttpActionResult GetCategoryById(int id)
@@ -49,10 +49,10 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Add a new category
         /// </summary>
-        /// <param name="objDTOCAT01"></param>
-        /// <returns></returns>
+        /// <param name="objDTOCAT01">Category data to add</param>
+        /// <returns>Response of the add operation</returns>
         [HttpPost]
         [Route("AddCategory")]
         [JWTAuthorizationFilter("Admin")]
@@ -76,11 +76,11 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Edit an existing category
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="objDTOCAT01"></param>
-        /// <returns></returns>
+        /// <param name="id">Category ID</param>
+        /// <param name="objDTOCAT01">Updated category data</param>
+        /// <returns>Response of the edit operation</returns>
         [HttpPut]
         [Route("EditCategory")]
         [JWTAuthorizationFilter("Admin")]
@@ -104,10 +104,10 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Delete a category
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Category ID</param>
+        /// <returns>Response of the delete operation</returns>
         [HttpDelete]
         [Route("DeleteCategory")]
         [JWTAuthorizationFilter("Admin")]

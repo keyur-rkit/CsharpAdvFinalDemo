@@ -25,9 +25,9 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get all users
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of all users</returns>
         [HttpGet]
         [Route("GetAllUsers")]
         [JWTAuthorizationFilter("Admin")]
@@ -39,13 +39,13 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get the profile of the current user
         /// </summary>
-        /// <returns></returns>
+        /// <returns>User profile</returns>
         [HttpGet]
         [Route("GetUserProfile")]
         [JWTAuthorizationFilter]
-        public IHttpActionResult GetUserProfile() 
+        public IHttpActionResult GetUserProfile()
         {
             string token = GetTokenFromRequest();
             int userID = JWTHelper.GetUserIdFromToken(token);
@@ -56,10 +56,10 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Add a new user
         /// </summary>
-        /// <param name="objDTOUSR01"></param>
-        /// <returns></returns>
+        /// <param name="objDTOUSR01">User data to add</param>
+        /// <returns>Response of the add operation</returns>
         [HttpPost]
         [Route("AddUser")]
         [JWTAuthorizationFilter("Admin")]
@@ -83,15 +83,15 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Edit an existing user
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="objDTOUSR01"></param>
-        /// <returns></returns>
+        /// <param name="id">ID of the user to edit</param>
+        /// <param name="objDTOUSR01">Updated user data</param>
+        /// <returns>Response of the edit operation</returns>
         [HttpPut]
         [Route("EditUser")]
         [JWTAuthorizationFilter("Admin")]
-        public IHttpActionResult EditUser(int id,DTOUSR01 objDTOUSR01)
+        public IHttpActionResult EditUser(int id, DTOUSR01 objDTOUSR01)
         {
             if (!ModelState.IsValid)
             {
@@ -102,7 +102,7 @@ namespace API.Controllers
             _objBLUSR01.PreSave(objDTOUSR01);
             _objResponse = _objBLUSR01.Validation();
 
-            if(!_objResponse.IsError)
+            if (!_objResponse.IsError)
             {
                 _objBLUSR01.Save();
             }
@@ -111,10 +111,10 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Delete a user
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">ID of the user to delete</param>
+        /// <returns>Response of the delete operation</returns>
         [HttpDelete]
         [Route("DeleteUser")]
         [JWTAuthorizationFilter("Admin")]
@@ -123,13 +123,17 @@ namespace API.Controllers
             _objBLUSR01.Type = EnmType.D;
             _objBLUSR01.Id = id;
             _objResponse = _objBLUSR01.Validation();
-            if(!_objResponse.IsError)
+            if (!_objResponse.IsError)
             {
                 _objResponse = _objBLUSR01.Delete();
             }
             return Ok(_objResponse);
         }
 
+        /// <summary>
+        /// Retrieve the token from the request headers
+        /// </summary>
+        /// <returns>JWT token</returns>
         private string GetTokenFromRequest()
         {
             string token = string.Empty;

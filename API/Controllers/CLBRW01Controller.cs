@@ -25,9 +25,9 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get all records
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of all records</returns>
         [HttpGet]
         [Route("GetAllRecords")]
         [JWTAuthorizationFilter("Admin")]
@@ -39,10 +39,10 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get record by ID
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Record ID</param>
+        /// <returns>Record details</returns>
         [HttpGet]
         [Route("GetRecordById")]
         [JWTAuthorizationFilter("Admin")]
@@ -53,9 +53,9 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get records by user
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of user records</returns>
         [HttpGet]
         [Route("GetRecordsByUser")]
         [JWTAuthorizationFilter]
@@ -70,10 +70,10 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Borrow a book
         /// </summary>
-        /// <param name="objDTOBRW01"></param>
-        /// <returns></returns>
+        /// <param name="objDTOBRW01">Borrowing details</param>
+        /// <returns>Response of the borrow operation</returns>
         [HttpPost]
         [Route("BorrowBook")]
         [JWTAuthorizationFilter("Admin")]
@@ -96,15 +96,15 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Return a borrowed book
         /// </summary>
-        /// <param name="recordId"></param>
-        /// <param name="returnDate"></param>
-        /// <returns></returns>
+        /// <param name="recordId">Record ID</param>
+        /// <param name="returnDate">Date of return</param>
+        /// <returns>Response of the return operation</returns>
         [HttpPost]
         [Route("ReturnBook")]
         [JWTAuthorizationFilter("Admin")]
-        public IHttpActionResult ReturnBook(int recordId , DateTime returnDate)
+        public IHttpActionResult ReturnBook(int recordId, DateTime returnDate)
         {
             _objBLBRW01.Type = EnmType.E;
             _objBLBRW01.Id = recordId;
@@ -120,9 +120,9 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Backup all records
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response of the backup operation</returns>
         [HttpGet]
         [Route("BackupRecords")]
         [JWTAuthorizationFilter("Admin")]
@@ -133,7 +133,10 @@ namespace API.Controllers
             return Ok(_objResponse);
         }
 
-
+        /// <summary>
+        /// Retrieve the token from the request headers
+        /// </summary>
+        /// <returns>JWT token</returns>
         private string GetTokenFromRequest()
         {
             string token = string.Empty;

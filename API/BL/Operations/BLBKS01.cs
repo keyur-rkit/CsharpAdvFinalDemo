@@ -4,7 +4,6 @@ using API.Models;
 using API.Models.DTO;
 using API.Models.Enum;
 using API.Models.POCO;
-using Google.Protobuf.Compiler;
 using ServiceStack.Data;
 using ServiceStack.OrmLite;
 using System;
@@ -16,7 +15,7 @@ using System.Web;
 namespace API.BL.Operations
 {
     /// <summary>
-    /// 
+    /// Business logic for operations on BKS01 (Books)
     /// </summary>
     public class BLBKS01 : IDataHandler<DTOBKS01>
     {
@@ -40,10 +39,10 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Check if book exists by ID
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Book ID</param>
+        /// <returns>True if book exists, otherwise false</returns>
         public bool IsExist(int id)
         {
             using (IDbConnection db = _dbFactory.OpenDbConnection())
@@ -53,9 +52,9 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Get all books
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response containing list of books</returns>
         public Response GetAll()
         {
             try
@@ -73,7 +72,7 @@ namespace API.BL.Operations
                     }
                     _objResponse.IsError = false;
                     _objResponse.Data = result;
-                    _objResponse.Message = "Books get successfully";
+                    _objResponse.Message = "Books retrieved successfully";
                 }
             }
             catch (Exception ex)
@@ -85,10 +84,10 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Get book by ID
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Book ID</param>
+        /// <returns>Response containing book details</returns>
         public Response GetById(int id)
         {
             try
@@ -96,7 +95,7 @@ namespace API.BL.Operations
                 if (!IsExist(id))
                 {
                     _objResponse.IsError = true;
-                    _objResponse.Message = "Book dose not Exist";
+                    _objResponse.Message = "Book does not exist";
                     _objResponse.Data = null;
 
                     return _objResponse;
@@ -104,7 +103,7 @@ namespace API.BL.Operations
                 using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     _objResponse.Data = db.SingleById<BKS01>(id);
-                    _objResponse.Message = "Book get successfully";
+                    _objResponse.Message = "Book retrieved successfully";
                     return _objResponse;
                 }
             }
@@ -117,10 +116,10 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Add a new book
         /// </summary>
-        /// <param name="objBKS01"></param>
-        /// <returns></returns>
+        /// <param name="objBKS01">Book object</param>
+        /// <returns>Response of the add operation</returns>
         public Response Add(BKS01 objBKS01)
         {
             try
@@ -128,9 +127,7 @@ namespace API.BL.Operations
                 using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     objBKS01.S01F01 = (int)db.Insert(objBKS01, selectIdentity: true);
-                    _objResponse.Message = $"Book Added with Id {objBKS01.S01F01}";
-                    //db.Insert(objBKS01);
-                    //_objResponse.Message = "Book Added";
+                    _objResponse.Message = $"Book added with Id {objBKS01.S01F01}";
                 }
             }
             catch (Exception ex)
@@ -142,10 +139,10 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Edit an existing book
         /// </summary>
-        /// <param name="objBKS01"></param>
-        /// <returns></returns>
+        /// <param name="objBKS01">Book object</param>
+        /// <returns>Response of the edit operation</returns>
         public Response Edit(BKS01 objBKS01)
         {
             try
@@ -153,7 +150,7 @@ namespace API.BL.Operations
                 using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     db.Update(objBKS01);
-                    _objResponse.Message = $"Book with Id {Id} Edited";
+                    _objResponse.Message = $"Book with Id {Id} edited";
                 }
             }
             catch (Exception ex)
@@ -165,9 +162,9 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Prepare book object before save
         /// </summary>
-        /// <param name="objDTO"></param>
+        /// <param name="objDTO">Book DTO object</param>
         public void PreSave(DTOBKS01 objDTO)
         {
             _objBKS01 = objDTO.Convert<BKS01>();
@@ -179,9 +176,9 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Validate book data before save
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response of the validation</returns>
         public Response Validation()
         {
             if (Type == EnmType.E || Type == EnmType.D)
@@ -202,12 +199,11 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Save book data
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response of the save operation</returns>
         public Response Save()
         {
-
             if (Type == EnmType.A)
             {
                 return Add(_objBKS01);
@@ -221,9 +217,9 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Delete a book
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response of the delete operation</returns>
         public Response Delete()
         {
             try
@@ -233,7 +229,7 @@ namespace API.BL.Operations
                     if (Type == EnmType.D)
                     {
                         db.DeleteById<BKS01>(Id);
-                        _objResponse.Message = $"Book with Id {Id} Deleted";
+                        _objResponse.Message = $"Book with Id {Id} deleted";
                     }
                 }
             }
@@ -246,10 +242,10 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Decrease the number of available copies of a book by one
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Book ID</param>
+        /// <returns>Response of the operation</returns>
         public Response DecreaseOne(int id)
         {
             using (IDbConnection db = _dbFactory.OpenDbConnection())
@@ -259,13 +255,13 @@ namespace API.BL.Operations
                 if (_objBKS01.S01F06 <= 0)
                 {
                     _objResponse.IsError = true;
-                    _objResponse.Message = "There is no book available";
+                    _objResponse.Message = "There are no books available";
                 }
                 else
                 {
                     _objResponse.IsError = false;
-                    _objResponse.Message = _objBKS01.S01F06 == 1 
-                        ? "Last copy of book" 
+                    _objResponse.Message = _objBKS01.S01F06 == 1
+                        ? "Last copy of the book"
                         : $"{_objBKS01.S01F06} books are available";
                     db.UpdateAdd(() => new BKS01 { S01F06 = -1 }, where: b => b.S01F01 == id);
                 }
@@ -275,9 +271,9 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Increase the number of available copies of a book by one
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Book ID</param>
         public void IncreaseOne(int id)
         {
             using (IDbConnection db = _dbFactory.OpenDbConnection())

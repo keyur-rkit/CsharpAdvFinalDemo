@@ -15,7 +15,7 @@ using System.Collections.Generic;
 namespace API.BL.Operations
 {
     /// <summary>
-    /// 
+    /// Business logic for operations on AUH01 (Authors)
     /// </summary>
     public class BLAUH01 : IDataHandler<DTOAUH01>
     {
@@ -39,10 +39,10 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Check if author exists by ID
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Author ID</param>
+        /// <returns>True if author exists, otherwise false</returns>
         public bool IsExist(int id)
         {
             using (IDbConnection db = _dbFactory.OpenDbConnection())
@@ -52,9 +52,9 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Get all authors
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response containing list of authors</returns>
         public Response GetAll()
         {
             try
@@ -72,7 +72,7 @@ namespace API.BL.Operations
                     }
                     _objResponse.IsError = false;
                     _objResponse.Data = result;
-                    _objResponse.Message = "Authors get successfully";
+                    _objResponse.Message = "Authors retrieved successfully";
                 }
             }
             catch (Exception ex)
@@ -84,10 +84,10 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Get author by ID
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Author ID</param>
+        /// <returns>Response containing author details</returns>
         public Response GetById(int id)
         {
             try
@@ -95,7 +95,7 @@ namespace API.BL.Operations
                 if (!IsExist(id))
                 {
                     _objResponse.IsError = true;
-                    _objResponse.Message = "Author dose not Exist";
+                    _objResponse.Message = "Author does not exist";
                     _objResponse.Data = null;
 
                     return _objResponse;
@@ -103,7 +103,7 @@ namespace API.BL.Operations
                 using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     _objResponse.Data = db.SingleById<AUH01>(id);
-                    _objResponse.Message = "Author get successfully";
+                    _objResponse.Message = "Author retrieved successfully";
                     return _objResponse;
                 }
             }
@@ -116,10 +116,10 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Add a new author
         /// </summary>
-        /// <param name="objAUH01"></param>
-        /// <returns></returns>
+        /// <param name="objAUH01">Author object</param>
+        /// <returns>Response of the add operation</returns>
         public Response Add(AUH01 objAUH01)
         {
             try
@@ -127,9 +127,7 @@ namespace API.BL.Operations
                 using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     objAUH01.H01F01 = (int)db.Insert(objAUH01, selectIdentity: true);
-                    _objResponse.Message = $"Auhtor Added with Id {objAUH01.H01F01}";
-                    //db.Insert(objAUH01);
-                    //_objResponse.Message = "Auhtor Added";
+                    _objResponse.Message = $"Author added with Id {objAUH01.H01F01}";
                 }
             }
             catch (Exception ex)
@@ -141,10 +139,10 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Edit an existing author
         /// </summary>
-        /// <param name="objAUH01"></param>
-        /// <returns></returns>
+        /// <param name="objAUH01">Author object</param>
+        /// <returns>Response of the edit operation</returns>
         public Response Edit(AUH01 objAUH01)
         {
             try
@@ -152,7 +150,7 @@ namespace API.BL.Operations
                 using (IDbConnection db = _dbFactory.OpenDbConnection())
                 {
                     db.Update(objAUH01);
-                    _objResponse.Message = $"Auhtor with Id {Id} Edited";
+                    _objResponse.Message = $"Author with Id {Id} edited";
                 }
             }
             catch (Exception ex)
@@ -164,9 +162,9 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Prepare author object before save
         /// </summary>
-        /// <param name="objDTO"></param>
+        /// <param name="objDTO">Author DTO object</param>
         public void PreSave(DTOAUH01 objDTO)
         {
             _objAUH01 = objDTO.Convert<AUH01>();
@@ -178,9 +176,9 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Validate author data before save
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response of the validation</returns>
         public Response Validation()
         {
             if (Type == EnmType.E || Type == EnmType.D)
@@ -201,12 +199,11 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Save author data
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response of the save operation</returns>
         public Response Save()
         {
-
             if (Type == EnmType.A)
             {
                 return Add(_objAUH01);
@@ -220,9 +217,9 @@ namespace API.BL.Operations
         }
 
         /// <summary>
-        /// 
+        /// Delete an author
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response of the delete operation</returns>
         public Response Delete()
         {
             try
@@ -232,7 +229,7 @@ namespace API.BL.Operations
                     if (Type == EnmType.D)
                     {
                         db.DeleteById<AUH01>(Id);
-                        _objResponse.Message = $"Author with Id {Id} Deleted";
+                        _objResponse.Message = $"Author with Id {Id} deleted";
                     }
                 }
             }

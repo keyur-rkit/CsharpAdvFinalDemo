@@ -28,9 +28,9 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get all authors
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of all authors</returns>
         [HttpGet]
         [Route("GetAllAuthors")]
         public IHttpActionResult GetAllAuthors()
@@ -41,10 +41,10 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get author by ID
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Author ID</param>
+        /// <returns>Author details</returns>
         [HttpGet]
         [Route("GetAuthorById")]
         public IHttpActionResult GetAuthorById(int id)
@@ -52,12 +52,12 @@ namespace API.Controllers
             _objResponse = _objBLAUH01.GetById(id);
             return Ok(_objResponse);
         }
-        
+
         /// <summary>
-        /// 
+        /// Add a new author
         /// </summary>
-        /// <param name="objDTOAUH01"></param>
-        /// <returns></returns>
+        /// <param name="objDTOAUH01">Author data to add</param>
+        /// <returns>Response of the add operation</returns>
         [HttpPost]
         [Route("AddAuthor")]
         [JWTAuthorizationFilter("Admin")]
@@ -81,11 +81,11 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Edit an existing author
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="objDTOAUH01"></param>
-        /// <returns></returns>
+        /// <param name="id">Author ID</param>
+        /// <param name="objDTOAUH01">Updated author data</param>
+        /// <returns>Response of the edit operation</returns>
         [HttpPut]
         [Route("EditAuhtor")]
         [JWTAuthorizationFilter("Admin")]
@@ -109,10 +109,10 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Delete an author
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Author ID</param>
+        /// <returns>Response of the delete operation</returns>
         [HttpDelete]
         [Route("DeleteAuthor")]
         [JWTAuthorizationFilter("Admin")]
