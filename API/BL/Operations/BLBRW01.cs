@@ -325,7 +325,15 @@ namespace API.BL.Operations
 
                     foreach (BRW01 item in result)
                     {
-                        dynamic temp = item.W01F05 ?? "NULL";
+                        dynamic temp;
+                        if (item.W01F05 == null)
+                        {
+                            temp = "NULL";
+                        }
+                        else
+                        {
+                            temp = item.W01F05;
+                        }
                         sw.WriteLine($"{item.W01F01},{item.W01F02},{item.W01F03},{item.W01F04},{temp},{item.W01F06},{item.W01F07}");
                     }
                 }
