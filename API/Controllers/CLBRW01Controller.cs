@@ -13,6 +13,7 @@ namespace API.Controllers
     /// Controller to handle CRUD of BRW01
     /// </summary>
     [RoutePrefix("api/Records")]
+    [ValidateModelState]
     public class CLBRW01Controller : ApiController
     {
         private Response _objResponse;
@@ -79,10 +80,10 @@ namespace API.Controllers
         [JWTAuthorizationFilter("Admin")]
         public IHttpActionResult BorrowBook(DTOBRW01 objDTOBRW01)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             _objBLBRW01.Type = EnmType.A;
             _objBLBRW01.PreSave(objDTOBRW01);

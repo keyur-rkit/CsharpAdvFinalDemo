@@ -224,6 +224,7 @@
     <Compile Include="Controllers\CLUSR01Controller.cs" />
     <Compile Include="Extensions\DTOToPOCO.cs" />
     <Compile Include="Filters\JWTAuthorizationFilter.cs" />
+    <Compile Include="Filters\ValidateModelState.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

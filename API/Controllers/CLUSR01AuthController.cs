@@ -4,6 +4,7 @@ using API.Models;
 using API.Models.DTO;
 using API.Models.POCO;
 using System.Web.Http;
+using API.Filters;
 
 namespace API.Controllers
 {
@@ -12,6 +13,7 @@ namespace API.Controllers
     /// </summary>
     [RoutePrefix("api/Auth")]
     [AllowAnonymous]
+    [ValidateModelState]
     public class CLUSR01AuthController : ApiController
     {
         private Response _objResponse;
@@ -33,10 +35,10 @@ namespace API.Controllers
         [Route("GetToken")]
         public IHttpActionResult GetToken(DTOUSR01Auth objAuth)
         {
-            if(!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if(!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             _objUSR01 = _objBLUSR01.GetUser(objAuth);
 

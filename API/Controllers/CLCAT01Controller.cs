@@ -11,6 +11,7 @@ namespace API.Controllers
     /// Controller to handle CRUD of CAT01
     /// </summary>
     [RoutePrefix("api/Categories")]
+    [ValidateModelState]
     public class CLCAT01Controller : ApiController
     {
         private Response _objResponse;
@@ -58,10 +59,10 @@ namespace API.Controllers
         [JWTAuthorizationFilter("Admin")]
         public IHttpActionResult AddCategory(DTOCAT01 objDTOCAT01)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             _objBLCAT01.Type = EnmType.A;
             _objBLCAT01.PreSave(objDTOCAT01);
@@ -86,10 +87,10 @@ namespace API.Controllers
         [JWTAuthorizationFilter("Admin")]
         public IHttpActionResult EditCategory(int id, DTOCAT01 objDTOCAT01)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
             _objBLCAT01.Type = EnmType.E;
             _objBLCAT01.Id = id;
             _objBLCAT01.PreSave(objDTOCAT01);

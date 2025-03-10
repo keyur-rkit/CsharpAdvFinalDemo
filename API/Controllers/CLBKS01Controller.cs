@@ -14,6 +14,7 @@ namespace API.Controllers
     /// Controller to handle CRUD of BKS01
     /// </summary>
     [RoutePrefix("api/Books")]
+    [ValidateModelState]
     public class CLBKS01Controller : ApiController
     {
         private Response _objResponse;
@@ -70,10 +71,10 @@ namespace API.Controllers
         [JWTAuthorizationFilter("Admin")]
         public IHttpActionResult AddBook(DTOBKS01 objDTOBKS01)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             _objBLBKS01.Type = EnmType.A;
             _objBLBKS01.PreSave(objDTOBKS01);
@@ -99,10 +100,10 @@ namespace API.Controllers
         [JWTAuthorizationFilter("Admin")]
         public IHttpActionResult EditBook(int id, DTOBKS01 objDTOBKS01)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
             _objBLBKS01.Type = EnmType.E;
             _objBLBKS01.Id = id;
             _objBLBKS01.PreSave(objDTOBKS01);

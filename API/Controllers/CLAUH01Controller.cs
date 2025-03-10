@@ -16,6 +16,7 @@ namespace API.Controllers
     /// Controller to handle CRUD of AUH01
     /// </summary>
     [RoutePrefix("api/Authors")]
+    [ValidateModelState]
     public class CLAUH01Controller : ApiController
     {
         private Response _objResponse;
@@ -63,10 +64,10 @@ namespace API.Controllers
         [JWTAuthorizationFilter("Admin")]
         public IHttpActionResult AddAuthor(DTOAUH01 objDTOAUH01)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             _objBLAUH01.Type = EnmType.A;
             _objBLAUH01.PreSave(objDTOAUH01);
@@ -91,10 +92,10 @@ namespace API.Controllers
         [JWTAuthorizationFilter("Admin")]
         public IHttpActionResult EditAuhtor(int id, DTOAUH01 objDTOAUH01)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
             _objBLAUH01.Type = EnmType.E;
             _objBLAUH01.Id = id;
             _objBLAUH01.PreSave(objDTOAUH01);

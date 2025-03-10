@@ -13,6 +13,8 @@ namespace API.Controllers
     /// Controller to handle CRUD of USR01
     /// </summary>
     [RoutePrefix("api/Users")]
+    [ValidateModelState]
+
     public class CLUSR01Controller : ApiController
     {
         private Response _objResponse;
@@ -65,10 +67,10 @@ namespace API.Controllers
         [JWTAuthorizationFilter("Admin")]
         public IHttpActionResult AddUser(DTOUSR01 objDTOUSR01)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             _objBLUSR01.Type = EnmType.A;
             _objBLUSR01.PreSave(objDTOUSR01);
@@ -93,10 +95,10 @@ namespace API.Controllers
         [JWTAuthorizationFilter("Admin")]
         public IHttpActionResult EditUser(int id, DTOUSR01 objDTOUSR01)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
             _objBLUSR01.Type = EnmType.E;
             _objBLUSR01.Id = id;
             _objBLUSR01.PreSave(objDTOUSR01);
